@@ -5,15 +5,30 @@ import pandas as pd
 import os
 from fastai.vision.all import Path,load_learner,Image
 import pathlib
+import database as db
 
 temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
-# pathlib.WindowsPath = pathlib.PosixPath
 path = Path('export.pkl')
 
 learn = load_learner(path)
 
 df = pd.read_csv("Flowers.csv",index_col=['Index'])
+
+
+def form():
+    st.write ("This is a form")
+    with st.form(key= "Information form"):
+        name=st.text_input("Enter you name ")
+        age=st.number_input("Enter your age: ",step=1)
+        address=st.text_input("Enter your Address: ")
+        # date=st.date_input("Enter the date: ")
+        st.markdown("Predicted Class is "+str(pred_class))
+        pred=str(pred_class)
+        submission=st.form_submit_button (label="Submit")
+        if submission == True :
+            db.insert_result(name,age,address,pred)
+            st.success ("Successfully submitted")
 
 def get_name(cat_num):
     return df[df.index == cat_num].reset_index(drop=True)['Cat_Name'][0]
@@ -34,7 +49,6 @@ html_temp = """
     </div>
     """
 st.markdown(html_temp,unsafe_allow_html=True)
-
 #image = PIL.Image.open('bg.jpg')
 #st.image(image, use_column_width=True)
 
@@ -49,9 +63,8 @@ if option == 'Choose your own image':
             st.image(img, width=200)
         with col2:
             st.success("Flower Name:  [" + str(pred_class) + "] ")
-            st.info("Probability: [" + str(prob) + '%]')
-        st.subheader("Flower Details:")
-        st.table(details)
+            form()
+            # st.info("Probability: [" + str(prob) + '%]')
 else:
     test_images = os.listdir('sample_images')
     test_image = st.selectbox('Please select a test image:', test_images)
@@ -63,7 +76,7 @@ else:
         st.image(img, width=200)
     with col2:
         st.success("Flower Name:  [" + str(pred_class) + "] ")
-        st.info("Probability: [" + str(prob) + '%]')
-    st.subheader("Flower Details:")
-    st.table(details)
+        form()
+        # st.info("Probability: [" + str(prob) + '%]')
 
+# form()
