@@ -1,7 +1,5 @@
 streamlit
-fastai
-pandas
 numpy
-googledrivedownloader
-Pillow
 deta
+Keras-Preprocessing
+keras-models

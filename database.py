@@ -4,7 +4,7 @@ DETA_KEY = "d03z5mkt_KJv6bvaiTBvxUuJJLMNXjfvLYioRig61"
 
 deta = Deta(DETA_KEY)
 
-db=deta.Base("Flower")
+db=deta.Base("Skin Cancer Detection")
 
 def insert_result(name,age,address,pred):
     db.put({
