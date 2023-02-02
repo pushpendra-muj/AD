@@ -32,7 +32,7 @@ def predict_img(img):
     input_img = np.expand_dims(input_img, axis=0)
     predict_img = model.predict(input_img)
     y_pred = np.argmax(predict_img, axis=1)
-    target_names = ['Actinic Keratosis', 'Basal Cell Carcinoma', 'Dermatofibroma','Squamous Cell Carcinoma' , 'Nevus', 'Pigmented Benign Keratosis', 'Seborrheic Keratosis', 'Melanoma', 'Vascular Lesion']
+    target_names = ['Actinic Keratosis', 'Basal Cell Carcinoma', 'Dermatofibroma','Melanoma' , 'Nevus', 'Pigmented Benign Keratosis', 'Seborrheic Keratosis','Squamous Cell Carcinoma' , 'Vascular Lesion']
     return target_names[y_pred[0]]
 
 html_temp = """
