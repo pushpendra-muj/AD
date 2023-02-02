@@ -1,6 +1,6 @@
 from deta import Deta
 
-DETA_KEY = "d03z5mkt_KJv6bvaiTBvxUuJJLMNXjfvLYioRig61"
+DETA_KEY = "d03z5mkt_TafGU463A3bYRKHcWz4zP8au8bTdXUuQ"
 
 deta = Deta(DETA_KEY)
 
