@@ -13,7 +13,7 @@ model.load_weights('my_model_weights.h5')
 
 
 def form():
-    st.write ("This is a form")
+    st.title ("Form")
     with st.form(key= "Information form"):
         col1, col2 = st.columns(2)
         with col1:
