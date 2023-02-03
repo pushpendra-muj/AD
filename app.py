@@ -15,20 +15,40 @@ model.load_weights('my_model_weights.h5')
 def form():
     st.write ("This is a form")
     with st.form(key= "Information form"):
-        name=st.text_input("Enter you name ")
-        age=st.number_input("Enter your age: ",step=1)
-        address=st.text_input("Enter your Address: ")
-        # date=st.date_input("Enter the date: ")
-        st.markdown("Predicted Class is "+str(pred_class))
-        pred=str(pred_class)
-        submission=st.form_submit_button (label="Submit")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.title('Doctor Information')
+            docname=st.text_input("Enter Doctor name ")
+            doc_contact=st.number_input("Enter Doctor contact number ",step=1)
+            doc_quli=st.text_input("Enter Doctor Qualification ")
+            hospital_name=st.text_input("Enter Hospital name ")
+            hospital_address=st.text_input("Enter Hospital Address ")
+        with col2:
+            st.title('Patient Information')
+            id=st.text_input("Enter Patient id: ")
+            name=st.text_input("Enter Patient name ")
+            age=st.number_input("Enter Patient age: ",step=1)
+            date = st.date_input("Enter the date: ")
+            address=st.text_input("Enter Patient Address: ")
+            pat_contact=st.number_input("Enter Patient contact number: ",step=1)
+            aadhar=st.number_input("Enter Patient aadhar number: ",step=1)
+            remark=st.text_input("Enter Remark (for Doctor Use): ")
+            st.markdown("Predicted Class is "+str(pred_class))
+            pred=str(pred_class)
+        submission=st.form_submit_button(label="Submit")
+        
         if submission == True :
-            db.insert_result(name,age,address,pred)
+            db.insert_result(docname,doc_contact,doc_quli,hospital_name,hospital_address,id,name,age,date,address,pat_contact,aadhar,remark,pred)
             st.success ("Successfully submitted")
+            
             st.title('Results')
+            st.markdown('Patient id: '+str(id))
             st.markdown('Name: '+name)
             st.markdown('Age: '+str(age))
+            st.markdown('Date: '+str(date))
             st.markdown('Address: '+address)
+            st.markdown('Contact: '+str(pat_contact))
+            st.markdown('Aadhar: '+str(aadhar))
             st.markdown('Prediction : '+pred)
 
 
@@ -37,7 +57,7 @@ def predict_img(img):
     input_img = np.expand_dims(input_img, axis=0)
     predict_img = model.predict(input_img)
     y_pred = np.argmax(predict_img, axis=1)
-    target_names = ['Actinic Keratosis', 'Basal Cell Carcinoma', 'Dermatofibroma','Melanoma' , 'Nevus', 'Pigmented Benign Keratosis', 'Seborrheic Keratosis','Squamous Cell Carcinoma' , 'Vascular Lesion']
+    target_names = ['Actinic Keratosis', 'Basal Cell Carcinoma', 'Dermatofibroma','Squamous Cell Carcinoma' , 'Nevus', 'Pigmented Benign Keratosis', 'Seborrheic Keratosis', 'Melanoma', 'Vascular Lesion']
     return target_names[y_pred[0]]
 
 html_temp = """
@@ -60,7 +80,7 @@ if option == 'Choose your own image':
             st.image(img, width=200)
         with col2:
             st.success("Skin Cancer Type:  [" + str(pred_class) + "] ")
-            form()
+        form()
 else:
     test_images = os.listdir('sample_images')
     test_image = st.selectbox('Please select a test image:', test_images)
@@ -72,4 +92,4 @@ else:
         st.image(img, width=200)
     with col2:
         st.success("Skin Cancer Type:  [" + str(pred_class) + "] ")
-        form()
+    form()
