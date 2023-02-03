@@ -4,7 +4,6 @@ import database as db
 from keras.models import model_from_json
 import numpy as np
 from tensorflow.keras.preprocessing import image
-# from keras.preprocessing import image
 with open('model_arch.json', 'r') as json_file:
     json_savedModel= json_file.read()
 model = model_from_json(json_savedModel)
