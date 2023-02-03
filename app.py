@@ -25,6 +25,11 @@ def form():
         if submission == True :
             db.insert_result(name,age,address,pred)
             st.success ("Successfully submitted")
+            st.title('Results')
+            st.markdown('Name: '+name)
+            st.markdown('Age: '+str(age))
+            st.markdown('Address: '+address)
+            st.markdown('Prediction : '+pred)
 
 
 def predict_img(img):
